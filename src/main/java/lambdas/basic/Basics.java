@@ -1,10 +1,9 @@
 package lambdas.basic;
 
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-/**
- * Created by bwei3 on 2/23/17.
- */
+
 public class Basics {
 
     /*
@@ -12,7 +11,7 @@ public class Basics {
     *
     *  expression lambda
     *
-    * */
+    */
 
     public Supplier<String > expressionLambda = () ->  "Hello World";
 
@@ -21,10 +20,34 @@ public class Basics {
     *
     *  statement lambda
     *
-    * */
+    */
     public Supplier<String> statementLambda = () -> { return  "Hello World"; };
 
+    /*
+    *  Syntax of Lambdas
+    *
+    *  lambda with multiple parameters
+    *
+    *  Without explicit type
+    */
+    public BiConsumer<String, String> biConsumerTest1 = (s1, s2) -> System.out.println(String.format("s1: %s,  s2: %s", s1, s2));
 
+
+    /*
+    *  Syntax of Lambdas
+    *
+    *  lambda with multiple parameters
+    *
+    *  With explicit type
+    */
+    public BiConsumer<String, String> biConsumerTest2 = (String s1, String s2) -> System.out.println(String.format("s1: %s,  s2: %s", s1, s2));
+
+
+    /*
+    *
+    * Lambdas vs Anonymous Inner Classes
+    * */
+    
 
 
 }

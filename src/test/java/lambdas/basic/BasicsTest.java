@@ -16,6 +16,11 @@ public class BasicsTest {
         assertEquals(basics.statementLambda.get(), "Hello World");
     }
 
+    @Test
+    public void testBiConsummer(){
+        basics.biConsumerTest1.accept("Hello", "World");
+        basics.biConsumerTest2.accept("Hello", "World");
+    }
 
 
 }

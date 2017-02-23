@@ -23,4 +23,35 @@ public class BasicsTest {
     }
 
 
+    @Test
+    public void testAnonymousClassIdentity(){
+        assertEquals(basics.plusOne(10), 11);
+    }
+
+    @Test
+    public void testAnonymousClassScope(){
+        assertEquals(basics.anonymousScope(), "Anonymous Inner Class");
+    }
+
+    @Test
+    public void testLambdaScope(){
+        assertEquals(basics.getScopeToString.get(), "Outer Current Scope");
+    }
+
+    @Test
+    public void testLambdaScopeThroughThread(){
+        basics.runThread();
+    }
+
+    @Test
+    public void testLambdaReferenceSelf(){
+        assertEquals(basics.fact1(5), 120);
+        assertEquals(basics.fact2.applyAsInt(5), 120);
+        assertEquals(basics.fact3.applyAsInt(5), 120);
+        assertEquals(Basics.fact3.applyAsInt(5), 120);
+    }
+
+    
+
+
 }

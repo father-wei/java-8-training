@@ -6,3 +6,20 @@ public class Library {
         return true;
     }
 }
+/*
+    good code
+  Merge too maps
+  map3 = Stream.of(map1, map2).flatMap(m -> m.entrySet().stream())
+       .collect(Collectors.toMap(Entry::getKey, Entry::getValue, Math::max))
+*/
+
+/*
+    good code
+  
+  return Optional.ofNullable(config)
+        .map(Configuration::getPayload)
+        .map(c->c.get(key))
+        .orElse("");
+*/
+
+

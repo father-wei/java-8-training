@@ -1,6 +1,11 @@
 package lambdas.basic;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import java.util.function.Supplier;
+
 import static org.junit.Assert.*;
 
 public class BasicsTest {
@@ -51,7 +56,57 @@ public class BasicsTest {
         assertEquals(Basics.fact3.applyAsInt(5), 120);
     }
 
-    
+    @Test
+    public void interfaceWithOneMethodTest(){
+        assertEquals(basics.interfaceWithOneMethod.apply("Hello") , "Hello World");
+    }
 
 
+    @Test
+    public void testFunctionalInterface(){
+        assertEquals(basics.si.compare(), true);
+    }
+
+    @Test
+    public void testCompareTarget(){
+        assertEquals(basics.cc.compare("a", "z") < 0, true);
+    }
+
+    @Test
+    public void testReturnTarget(){
+        basics.returnDatePrinter().run();
+    }
+
+    @Test
+    public void testReturnTargetLambdaBody(){
+        try {
+            basics.c.call().run();
+        }catch (Exception ex){
+
+        }
+    }
+
+
+    @Test
+    public void testCurry(){
+        assertEquals(basics.curry.get().get(), "Hi");
+    }
+
+    @Test
+    public void testCastExpressionTarget(){
+        assertEquals(((Supplier)basics.o).get(), "hi") ;
+
+    }
+
+
+    @Test
+    public void testOverloading(){
+        basics.<Integer>overloading(  s -> s + 1);
+    }
+
+    @Test
+    public void testOverloadingWithMethodReference(){
+        basics.<Exception>overloading2( Exception::new );
+        basics.<String, Exception>overloading2(Exception::new);
+    }
 }

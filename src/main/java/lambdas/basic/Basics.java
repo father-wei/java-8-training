@@ -1,10 +1,11 @@
 package lambdas.basic;
 
 
-import java.util.function.BiConsumer;
-import java.util.function.IntUnaryOperator;
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.concurrent.Callable;
+import java.util.function.*;
 
 
 public class Basics {
@@ -151,6 +152,184 @@ public class Basics {
     public static IntUnaryOperator fact3 = i -> i == 0 ? 1 : i * Basics.fact3.applyAsInt( i - 1);
 
 
+    /*
+    *  Functional Interface
+    *  Type is inferred by Functional Interface
+    * */
+    IntUnaryOperator iup    = x -> x * 2;
+
+    DoubleUnaryOperator duo = x -> x * 2;
+
+
+    /*
+    *  Functional Interface
+    *  Let's try a abstract class doesn't work
+    *
+    *  follow code won't compile
+
+
+    abstract class AbstractWithOneAbstractMethod{
+        public abstract String getString(String s);
+    }
+
+
+    AbstractWithOneAbstractMethod abstractMethod = i -> i;
+    */
+
+
+
+    /*
+    *   Functional Interface
+    *   Let's try a a interface
+    * */
+
+    interface InterfaceWithOneMethod {
+        String apply(String s);
+    }
+
+    public InterfaceWithOneMethod interfaceWithOneMethod = x -> x + " World";
+
+
+
+
+    /*
+    *  Consumer<T>
+    *  Predicate<T>
+    *  Supplier<T>
+    *  Function<T, U>
+    * */
+    Consumer<String> consumer = x -> { System.out.println("Hello World");};
+
+    Predicate<Integer> predicate = x -> x == 100;
+
+    Supplier<String> supplier = ()-> "Hello World";
+
+    Function<Integer, String> function = x -> x + "";
+
+
+    /*
+    *  Primitive Functional Interface
+    *
+    *  interface LongFunction<R>  { R apply(long value); }
+    *  interface ToIntFunction<T> { int applyAsInt(T value); }
+    *  interface LongToIntFunction { int applyAsInt(long value); }
+    * */
+
+    /*
+    *  Two arguments Functional Interface
+    *  interface BiConsumer <T, U> { void accept(T t, U u); }
+    *  interface BiFunction <T, U, R> { R apply(T t, U u); }
+    *  interface ToIntBiFunction<T, U> { int apply(T t, U u); }
+    * */
+
+    /*
+    *  Function require parameter and result same type
+    *  interface UnaryOperator<T> extends Function<T, T> { ... }
+    *  interface BinaryOperator<T> extends Function <T, T, T> { ... }
+    *  interface IntBinaryOperator {int applyAsInt(int left, int right); }
+    *
+    * */
+
+
+
+    /*
+    *  Target type
+    * */
+    @FunctionalInterface
+    interface SomeInterface {
+        boolean compare();
+        boolean equals(Object obj);
+    }
+
+
+    SomeInterface si = () -> true;
+
+    /*
+    * Variable declarations and assignments, for which the target type is the type being assigned to
+    * */
+    Comparator<String> cc = (s1, s2) -> s1.compareToIgnoreCase(s2);
+
+    /*
+    * Array initializer, only work for primitive functionalInterface
+    * */
+    IntBinaryOperator[] calcuatorOps = new IntBinaryOperator[]{
+            (x, y) -> x + y, (x,y) -> x -y, (x,y) -> x* y, (x,y) -> x / y
+    };
+
+    /*
+    * The follow code won't compile
+    *
+    * Function<String, String>[] collectStrings = new Function<String, String>[] {};
+    * */
+
+
+    /*
+    * Return statements, for which the target type is the return type of the method
+    * */
+    Runnable returnDatePrinter(){
+        return () -> System.out.println(new Date());
+    }
+
+    /*
+    * Lamdba expression bodies, for which the target type is the type expected for the body,
+    * which is derived in turn from the outer target type
+    * */
+
+    Callable<Runnable> c = ()-> () -> System.out.println("Hi");
+
+    /*
+    * currying, same as above
+    * */
+
+    Supplier<Supplier<String>> curry = () -> () -> "Hi";
+
+
+    /*
+    * Ternary (Same as variable declaration)
+    * */
+    Callable<Integer> c1 = true ? (() -> 23) : (() -> 24);
+
+    /*
+    * Cast expression
+    * */
+
+    Object o = (Supplier) ()-> "hi";
+
+    /*
+    * If reuse the lambda (cast), can compile, but throw runtime java.lang.ClassCastException
+    *  Callable c2 = (Callable) o;
+    * */
+
+
+
+    /*
+    * Overloading with Lambda expressions
+    *
+    * */
+
+    static <T> void overloading( Function<T, T> fn){
+        System.out.println("Function");
+    }
+
+    static <T> void overloading ( UnaryOperator<T> fn){
+        System.out.println("UnaryOperator");
+    }
+
+
+
+
+    /*
+    * Overloading with method references
+    */
+
+
+    <T> void overloading2 (Supplier<T> Supplier) {
+        System.out.println("Supplier");
+    }
+
+    <T, U> void overloading2 (Function<T, U> fn) {
+        System.out.println("Function");
+    }
 
 
 }

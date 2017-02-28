@@ -1,9 +1,6 @@
 package lambdas.basic;
 
-
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.function.*;
 
@@ -330,6 +327,88 @@ public class Basics {
     <T, U> void overloading2 (Function<T, U> fn) {
         System.out.println("Function");
     }
+
+
+    /*
+    *  Method and constructor Reference
+    * */
+
+    static class User{
+        final private String userName;
+        public User(String username) {
+            this.userName = username;
+        }
+
+        public String getUserName(){
+            return this.userName;
+        }
+
+        @Override
+        public String toString(){
+            return  "My name is " + userName;
+        }
+
+        static public String transform(String name){
+            return "My name is " + name;
+        }
+    }
+
+    // Method reference
+    public void tryMethodReference(){
+        List<User> users = Arrays.asList(new User("Xiao Ming"), new User("Xiao Hong"));
+
+        users.stream().map(User::getUserName).forEach(System.out::println);
+    }
+
+
+    // Method constructor reference
+    public void tryMethodConstructorReference(){
+        List<User> users = Arrays.asList(new User("Xiao Ming"), new User("Xiao Hong"));
+        users.stream().map(User::getUserName).map(User::new).forEach(System.out::println);
+    }
+
+
+    // Static method reference
+    public void tryStaticMethodReference(){
+        List<User> users = Arrays.asList(new User("Xiao Ming"), new User("Xiao Hong"));
+
+        users.stream().map(User::getUserName).map(User::transform).forEach(System.out::println);
+    }
+
+
+    //method reference with two parameters
+    public void tryMethodWithTwoParams(){
+        //create a map
+        Map<String, String> map = new HashMap<>();
+        map.put("Xiaohong", "1");
+        map.put("Xiaoming", "2");
+        map.put("asan", "3");
+
+        String str = "Xiaohong-Xiaoming-asan";
+        map.replaceAll(str::replace);
+
+        // same as above
+        // map.replaceAll((k, v) -> str.replace(k, v));
+        map.forEach((k , v) -> System.out.println(k + " " + v));
+
+
+        map = new HashMap<>();
+        map.put("Xiaohong", "1");
+        map.put("Xiaoming", "2");
+        map.put("asan", "3");
+
+        map.replaceAll(String::concat);
+
+        // same as above
+        //  map.replaceAll((k, v) -> k.concat(v));
+        map.forEach((k , v) -> System.out.println(k + " " + v));
+
+
+
+    }
+
+
+
 
 
 }

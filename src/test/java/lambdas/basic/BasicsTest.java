@@ -109,4 +109,24 @@ public class BasicsTest {
         basics.<Exception>overloading2( Exception::new );
         basics.<String, Exception>overloading2(Exception::new);
     }
+
+    @Test
+    public void testTryMethodReference(){
+        basics.tryMethodReference();
+    }
+
+    @Test
+    public void testTryMethodConstructorReference(){
+        basics.tryMethodConstructorReference();
+    }
+
+    @Test
+    public void testTryStaticMethodReference(){
+        basics.tryStaticMethodReference();
+    }
+
+    @Test
+    public void testTryMethodWithTwoParams(){
+        basics.tryMethodWithTwoParams();
+    }
 }
